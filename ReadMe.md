@@ -35,20 +35,7 @@
 
 > composer remove symfony/requirements-checker
 
-> bin/console make:controller ToDoListController
-
-> bin/console make:entity 
-
-```
-Task
-title
-string
-255
-yes
-status
-boolean
-yes
-```
+> bin/console make:controller FrontController
 
 
 # Symfony Packages
