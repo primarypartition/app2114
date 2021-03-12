@@ -37,6 +37,12 @@
 
 > bin/console make:controller FrontController
 
+> bin/console make:controller AdminController
+
+> bin/console make:entity Category
+
+> bin/console make:entity Video
+
 
 # Symfony Packages
 
@@ -56,37 +62,37 @@
 
 > composer require doctrine/annotations
 
+> composer require symfony/asset
+
 > composer require logger
 
 > composer require symfony/flex
 
 > composer require maker
 
-> composer require symfony/asset
-
 > composer require symfony/security-bundle
 
 > composer require orm-fixtures --dev
-
-> composer require sensio/framework-extra-bundle
 
 > composer require web-profiler-bundle
 
 > composer require symfony/debug-bundle
 
-> composer require symfony/proxy-manager-bridge
-
 > composer require symfony/cache
-
-> composer require symfony/event-dispatcher
 
 > composer require symfony/form
 
+> composer require symfony/proxy-manager-bridge
+
+> composer require symfony/event-dispatcher
+
 > composer require symfony/validator doctrine/annotations
+
+> composer require browser-kit css-selector --dev
 
 > composer require symfony/swiftmailer-bundle
 
-> composer require browser-kit css-selector --dev
+> composer require sensio/framework-extra-bundle
 
 > composer require --dev symfony/phpunit-bridge phpunit/phpunit symfony/test-pack
 
@@ -128,8 +134,6 @@ DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
 
 > bin/console doctrine:database:create
  
-> bin/console make:entity
-
 > bin/console make:migration
 
 > bin/console doctrine:migrations:migrate
@@ -145,82 +149,11 @@ bin/console make:migration &&
 bin/console doctrine:migrations:migrate -n -q 
 ```
 
-> bin/console doctrine:fixtures:load -n -q
-
-> bin/console make:entity Video
-
-> php bin/console make:migration
-
-> php bin/console doctrine:migrations:migrate
-
-> bin/console make:entity Address
-
-> php bin/console make:migration
-
-> php bin/console doctrine:migrations:migrate
-
-> php bin/console doctrine:fixtures:load
-
-> bin/console debug:autowiring
-
-
-# Commands
-
-> bin/console
-
-> bin/console make:controller WelcomeController
-
-> bin/console doctrine:database:create
-
-> bin/console make:entity
-
-> bin/console make:migration
-
-> bin/console doctrine:migrations:migrate
-
-> bin/console debug:container
-
-> bin/console cache:clear
-
-> bin/console list doctrine
+> bin/console doctrine:fixtures:load
 
 > bin/console doctrine:fixtures:load -n -q
 
-> bin/console debug:router
-
 > bin/console debug:autowiring
-
-> bin/console help make:migration
-
-> bin/console about
-
-> bin/console debug:event-dispatcher
-
-> bin/console debug:event-dispatcher kernel.request
-
-> bin/console make:subscriber
-
-> bin/console make:form VideoFormType
-
-> bin/console swiftmailer:spool:send --time-limit=10
-
-> bin/console make:functional-test
-
-> bin/console make:test
-
-> ./bin/phpunit
-
-> php bin/phpunit
-
-> vendor/bin/phpunit
-
-> php bin/phpunit --coverage-test
-
-> bin/console make:user
-
-> bin/console security:check 
-
-> bin/console make:voter
 
 
 # .htaccess file in public folder
@@ -268,3 +201,64 @@ module.exports = Encore.getWebpackConfig();
 > ./node_modules/.bin/encore production
 
 > ./node_modules/.bin/encore dev --watch
+
+
+# Commands
+
+> bin/console
+
+> bin/console make:controller WelcomeController
+
+> bin/console doctrine:database:create
+
+> bin/console make:entity
+
+> bin/console make:migration
+
+> bin/console make:fixture
+
+> bin/console doctrine:migrations:migrate
+
+> bin/console debug:container
+
+> bin/console cache:clear
+
+> bin/console list doctrine
+
+> bin/console doctrine:fixtures:load -n -q
+
+> bin/console debug:router
+
+> bin/console debug:autowiring
+
+> bin/console help make:migration
+
+> bin/console about
+
+> bin/console debug:event-dispatcher
+
+> bin/console debug:event-dispatcher kernel.request
+
+> bin/console make:subscriber
+
+> bin/console make:form VideoFormType
+
+> bin/console swiftmailer:spool:send --time-limit=10
+
+> bin/console make:functional-test
+
+> bin/console make:test
+
+> ./bin/phpunit
+
+> php bin/phpunit
+
+> vendor/bin/phpunit
+
+> php bin/phpunit --coverage-test
+
+> bin/console make:user
+
+> bin/console security:check 
+
+> bin/console make:voter
