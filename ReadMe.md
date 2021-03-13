@@ -78,6 +78,10 @@
 
 > composer require symfony/debug-bundle
 
+> composer require symfony/var-dumper
+
+> composer require symfony/profiler-pack
+
 > composer require symfony/cache
 
 > composer require symfony/form
@@ -216,6 +220,8 @@ module.exports = Encore.getWebpackConfig();
 > bin/console make:migration
 
 > bin/console make:fixture
+
+> bin/console make:twig-extension
 
 > bin/console doctrine:migrations:migrate
 
