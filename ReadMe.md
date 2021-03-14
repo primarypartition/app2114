@@ -106,6 +106,10 @@
 
 > composer require symfony/translation
 
+> https://github.com/KnpLabs/KnpPaginatorBundle
+
+> composer require knplabs/knp-paginator-bundle
+
 
 # Git Repo Setup 
 

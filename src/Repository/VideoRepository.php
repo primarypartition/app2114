@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @method Video|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,14 +15,55 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class VideoRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Video::class);
+        $this->paginator = $paginator;
     }
 
-    // /**
-    //  * @return Video[] Returns an array of Video objects
-    //  */
+    public function findByChildIds(array $value, int $page, ?string $sort_method)
+    {
+        $sort_method = $sort_method != 'rating' ? $sort_method : 'ASC'; // tmp
+
+        $dbquery = $this->createQueryBuilder('v')           
+            ->andWhere('v.category IN (:val)')
+            ->setParameter('val', $value)
+            ->orderBy('v.title', $sort_method)
+            ->getQuery();
+
+        $pagination = $this->paginator->paginate($dbquery, $page, 5);
+        return $pagination;
+    }
+
+    public function findByTitle(string $query, int $page, ?string $sort_method)
+    {
+        $sort_method = $sort_method != 'rating' ? $sort_method : 'ASC'; // tmp
+
+        $querybuilder = $this->createQueryBuilder('v');
+        $searchTerms = $this->prepareQuery($query);
+
+        foreach ($searchTerms as $key => $term)
+        {
+            $querybuilder
+                ->orWhere('v.title LIKE :t_'.$key)
+                ->setParameter('t_'.$key, '%'.trim($term).'%'); 
+        }
+
+        $dbquery =  $querybuilder
+            ->orderBy('v.title', $sort_method)
+            ->getQuery();
+
+        return $this->paginator->paginate($dbquery, $page, 5);
+    }
+
+    private function prepareQuery(string $query): array
+    {
+        return explode(' ',$query);
+    }
+
+//    /**
+//     * @return Video[] Returns an array of Video objects
+//     */
     /*
     public function findByExampleField($value)
     {
@@ -48,3 +90,4 @@ class VideoRepository extends ServiceEntityRepository
     }
     */
 }
+
