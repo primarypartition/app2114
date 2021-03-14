@@ -70,8 +70,6 @@
 
 > composer require maker
 
-> composer require symfony/security-bundle
-
 > composer require orm-fixtures --dev
 
 > composer require web-profiler-bundle
@@ -83,8 +81,6 @@
 > composer require symfony/profiler-pack
 
 > composer require symfony/cache
-
-> composer require symfony/form
 
 > composer require symfony/proxy-manager-bridge
 
@@ -100,7 +96,7 @@
 
 > composer require --dev symfony/phpunit-bridge phpunit/phpunit symfony/test-pack
 
-> composer require symfony/orm-pack symfony/form symfony/security-bundle symfony/validator
+> composer require symfony/orm-pack symfony/form symfony/security-bundle
 
 > composer require sensiolabs/security-checker
 
