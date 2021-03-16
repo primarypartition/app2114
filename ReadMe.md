@@ -47,6 +47,10 @@
 
 > bin/console make:entity User
 
+> bin/console make:form UserType
+
+> bin/console make:entity Comment
+
 
 # Symfony Packages
 
