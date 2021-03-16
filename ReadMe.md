@@ -43,6 +43,10 @@
 
 > bin/console make:entity Video
 
+> bin/console make:user
+
+> bin/console make:entity User
+
 
 # Symfony Packages
 
@@ -110,6 +114,8 @@
 
 > composer require knplabs/knp-paginator-bundle
 
+> composer require security
+
 
 # Git Repo Setup 
 
@@ -150,7 +156,8 @@ DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
 bin/console doctrine:schema:drop -n -q --force --full-database &&
 rm migrations/*.php &&
 bin/console make:migration &&
-bin/console doctrine:migrations:migrate -n -q 
+bin/console doctrine:migrations:migrate -n -q &&
+bin/console doctrine:fixtures:load -n -q
 ```
 
 > bin/console doctrine:fixtures:load
