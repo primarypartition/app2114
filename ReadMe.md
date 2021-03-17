@@ -116,9 +116,11 @@
 
 > https://github.com/KnpLabs/KnpPaginatorBundle
 
-> composer require knplabs/knp-paginator-bundle
+> composer require knplabs/knp-paginator-bundle knplabs/knp-time-bundle
 
 > composer require security
+
+> composer require --dev dama/doctrine-test-bundle
 
 
 # Git Repo Setup 
