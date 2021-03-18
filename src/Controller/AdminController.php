@@ -1,11 +1,16 @@
 <?php
-
+/*
+|--------------------------------------------------------
+| copyright netprogs.pl | available only at Udemy.com | further distribution is prohibited  ***
+|--------------------------------------------------------
+*/
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Utils\CategoryTreeAdminList;
 use App\Entity\Category;
+use App\Entity\Video;
 use App\Utils\CategoryTreeAdminOptionList;
 use App\Form\CategoryType;
 use Symfony\Component\HttpFoundation\Request;
@@ -91,7 +96,18 @@ class AdminController extends AbstractController
      */
     public function videos()
     {
-        return $this->render('admin/videos.html.twig');
+        if ($this->isGranted('ROLE_ADMIN')) 
+        {
+            $videos = $this->getDoctrine()->getRepository(Video::class)->findAll();
+        }
+        else
+        {
+            $videos = $this->getUser()->getLikedVideos();
+        }
+        
+        return $this->render('admin/videos.html.twig',[
+        'videos'=>$videos
+        ]);
     }
 
     /**

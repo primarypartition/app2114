@@ -4,16 +4,15 @@
 | copyright netprogs.pl | available only at Udemy.com | further distribution is prohibited  ***
 |--------------------------------------------------------
 */
-
 namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Entity\Category;
-use App\Tests\Rollback;
+use App\Tests\RoleAdmin;
 
 class AdminControllerCategoriesTest extends WebTestCase
 {
-    use Rollback;
+    use RoleAdmin;
 
     public function testTextOnPage()
     {

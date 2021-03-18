@@ -8,8 +8,11 @@ Encore
     // only needed for CDN's or sub-directory deploy
 
 // .addEntry('app', './assets/js/app.js')
+.addEntry('js/likes', './assets/js/likes.js')
+
 .addStyleEntry('css/dashboard', ['./assets/css/dashboard.css'])
     .addStyleEntry('css/login', ['./assets/css/login.css'])
+    .addStyleEntry('css/likes', ['./assets/css/likes.css'])
 
 .disableSingleRuntimeChunk();
 
