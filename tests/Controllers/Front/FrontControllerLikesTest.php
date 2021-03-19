@@ -30,5 +30,25 @@ class FrontControllerLikesTest extends WebTestCase
 
         $this->assertSame('(1)', $crawler->filter('small.number-of-dislikes-11')->text());
     }
+
+    public function testNumberOfLikedVidoes1()
+    {
+        $this->client->request('POST', '/video-list/11/like');
+        $this->client->request('POST', '/video-list/11/like');
+
+        $crawler = $this->client->request('GET', '/admin/videos');
+
+        $this->assertEquals(4, $crawler->filter('tr')->count());
+    }
+
+    public function testNumberOfLikedVidoes2()
+    {
+        $this->client->request('POST', '/video-list/1/unlike');
+        $this->client->request('POST', '/video-list/12/unlike');
+
+        $crawler = $this->client->request('GET', '/admin/videos');
+
+        $this->assertEquals(1, $crawler->filter('tr')->count());
+    }
 }
 
