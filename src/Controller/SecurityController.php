@@ -21,9 +21,12 @@ use App\Form\UserType;
 
 use App\Entity\Subscription; 
 
+use App\Controller\Traits\SaveSubscription;
+
 
 class SecurityController extends AbstractController
 {
+    use SaveSubscription; 
 
     /**
      * @Route("/login", name="login")
@@ -48,7 +51,7 @@ class SecurityController extends AbstractController
      */
     public function register(UserPasswordEncoderInterface $password_encoder, Request $request, SessionInterface $session, $plan)
     {
-
+        
         if( $request->isMethod('GET')  ) 
         {
             $session->set('planName',$plan);    
@@ -69,6 +72,19 @@ class SecurityController extends AbstractController
             $user->setPassword($password);
             $user->setRoles(['ROLE_USER']);
 
+            // c_93
+            $date = new \Datetime();
+            $date->modify('+1 month');
+            $subscription = new Subscription();
+            $subscription->setValidTo($date);
+            $subscription->setPlan($session->get('planName'));
+            if($plan == Subscription::getPlanDataNameByIndex(0)) // free plan
+            {
+                $subscription->setFreePlanUsed(true);
+                $subscription->setPaymentStatus('paid');
+            }
+            $user->setSubscription($subscription);
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -76,6 +92,19 @@ class SecurityController extends AbstractController
 
             return $this->redirectToRoute('admin_main_page');
         }
+
+        if($this->isGranted('IS_AUTHENTICATED_REMEMBERED') && $plan == Subscription::getPlanDataNameByIndex(0)) // free plan
+        {
+            $this->saveSubscription($plan,$this->getUser());
+            
+            return $this->redirectToRoute('admin_main_page');
+            
+        }
+        elseif($this->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            return $this->redirectToRoute('payment');
+        }
+
         return $this->render('front/register.html.twig',['form'=>$form->createView()]);
     }
    
