@@ -51,6 +51,8 @@
 
 > bin/console make:entity Comment
 
+> bin/console make:entity Subscription
+
 
 # Symfony Packages
 
@@ -281,3 +283,10 @@ module.exports = Encore.getWebpackConfig();
 > bin/console security:check 
 
 > bin/console make:voter
+
+> bin/console make:entity --regenerate
+
+
+# Redis
+
+> sudo apt-get install redis-server php-redis
