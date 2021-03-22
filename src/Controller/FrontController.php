@@ -15,8 +15,9 @@ use App\Utils\CategoryTreeFrontPage;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Comment;
 use App\Controller\Traits\Likes;
-use App\Utils\VideoForNoValidSubscription; 
+use App\Utils\VideoForNoValidSubscription;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Utils\Interfaces\CacheInterface;
 
 class FrontController extends AbstractController
 {
@@ -33,21 +34,36 @@ class FrontController extends AbstractController
     /**
      * @Route("/video-list/category/{categoryname},{id}/{page}", defaults={"page": "1"}, name="video_list")
      */
-    public function videoList($id, $page, CategoryTreeFrontPage $categories, Request $request, VideoForNoValidSubscription $video_no_members)
+    public function videoList($id, $page, CategoryTreeFrontPage $categories, Request $request, VideoForNoValidSubscription $video_no_members, CacheInterface $cache )
     {
-        $ids = $categories->getChildIds($id);
-        array_push($ids, $id);
+       
+        $cache = $cache->cache; 
+        $video_list = $cache->getItem('video_list'.$id.$page.$request->get('sortby'));
+        // $video_list->tag(['video_list']);
+        $video_list->expiresAfter(60);
 
-        $videos = $this->getDoctrine()
-        ->getRepository(Video::class)
-        ->findByChildIds($ids ,$page, $request->get('sortby'));
+        
+        if(!$video_list->isHit())
+        {
+            $ids = $categories->getChildIds($id);
+            array_push($ids, $id);
 
-        $categories->getCategoryListAndParent($id);
-        return $this->render('front/video_list.html.twig',[
-            'subcategories' => $categories,
-            'videos'=>$videos,
-            'video_no_members' => $video_no_members->check()
-        ]);
+            $videos = $this->getDoctrine()
+            ->getRepository(Video::class)
+            ->findByChildIds($ids ,$page, $request->get('sortby'));
+
+            $categories->getCategoryListAndParent($id);
+            $response = $this->render('front/video_list.html.twig',[
+                'subcategories' => $categories,
+                'videos'=>$videos,
+                'video_no_members' => $video_no_members->check() 
+            ]);
+
+            $video_list->set($response);
+            $cache->save($video_list);
+        }
+
+        return $video_list->get();
     }
 
     /**
@@ -126,6 +142,7 @@ class FrontController extends AbstractController
         ]);
     }
 
+
     public function mainCategories()
     {
         $categories = $this->getDoctrine()
@@ -169,6 +186,5 @@ class FrontController extends AbstractController
         return $this->json(['action' => $result,'id'=>$video->getId()]);
     }
 
-    
 }
 

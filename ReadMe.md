@@ -269,7 +269,9 @@ module.exports = Encore.getWebpackConfig();
 > bin/console make:entity --regenerate
 
 
-# Redis
+# Cache/Redis
+
+> composer require symfony/cache
 
 > sudo apt-get install redis-server php-redis
 
