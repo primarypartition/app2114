@@ -21,6 +21,8 @@ use App\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+use Symfony\Contracts\Translation\TranslatorInterface;
+
 /**
  * @Route("/admin")
  */
@@ -29,8 +31,11 @@ class MainController extends AbstractController
     /**
      * @Route("/", name="admin_main_page")
      */
-    public function index(Request $request, UserPasswordEncoderInterface $password_encoder)
+    public function index(Request $request , 
+    UserPasswordEncoderInterface $password_encoder, 
+    TranslatorInterface $translator )
     {
+
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user,['user'=>$user]);
         $form->handleRequest($request);
@@ -47,23 +52,25 @@ class MainController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-
+            $translated = $translator->trans('Your changes were saved!');
+           
             $this->addFlash(
                     'success',
-                    'Your changes were saved!'
+                    $translated
                 );
-            return $this->redirectToRoute('admin_main_page');  
+            return $this->redirectToRoute('admin_main_page'); 
         }
         elseif($request->isMethod('post'))
         {
             $is_invalid = 'is-invalid';
         }
 
+
         return $this->render('admin/my_profile.html.twig', [
             'subscription' => $this->getUser()->getSubscription(),
-            'form'=>$form->createView(),
-            'is_invalid' => $is_invalid
-        ]);
+            'form'=>$form->createView(), 
+            'is_invalid' => $is_invalid 
+        ]); 
     }
 
     /**
@@ -82,6 +89,7 @@ class MainController extends AbstractController
         return $this->redirectToRoute('main_page');
     }
 
+    //
     /**
      * @Route("/cancel-plan", name="cancel_plan")
      */
@@ -102,15 +110,15 @@ class MainController extends AbstractController
         return $this->redirectToRoute('admin_main_page');
     }
 
+
     /**
-     * @Route("/videos", name="videos")
+     * @Route( {"en":"/videos","pl":"/lista-video"}, name="videos")
      */
     public function videos(CategoryTreeAdminOptionList $categories)
     {
 
         if ($this->isGranted('ROLE_ADMIN')) 
         {
-
             $categories->getCategoryList($categories->buildTree());
             $videos = $this->getDoctrine()->getRepository(Video::class)->findBy([],['title'=>'ASC']);
             
