@@ -1,5 +1,9 @@
 <?php
-
+/*
+|-----------------------------------------------------------
+| available only at Udemy.com | copyright netprogs.pl | further distribution is prohibited
+|-----------------------------------------------------------
+*/
 namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -7,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminControllerSecurityTest extends WebTestCase
 {
-    /**
+        /**
      * @dataProvider getUrlsForRegularUsers
      */
     public function testAccessDeniedForRegularUsers(string $httpMethod, string $url)
@@ -28,6 +32,7 @@ class AdminControllerSecurityTest extends WebTestCase
         yield ['GET', '/admin/su/delete-category/1'];
         yield ['GET', '/admin/su/users'];
         yield ['GET', '/admin/su/upload-video-locally'];
+        yield ['GET', '/admin/su/upload-video-by-vimeo'];
     }
 
     public function testAdminSu()

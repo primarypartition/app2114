@@ -86,9 +86,7 @@
 
 > composer require browser-kit css-selector --dev
 
-> composer require symfony/swiftmailer-bundle
-
-> composer require sensio/framework-extra-bundle
+> composer require symfony/swiftmailer-bundle sensio/framework-extra-bundle
 
 > composer require --dev symfony/phpunit-bridge phpunit/phpunit symfony/test-pack
 
@@ -274,3 +272,11 @@ module.exports = Encore.getWebpackConfig();
 # Redis
 
 > sudo apt-get install redis-server php-redis
+
+
+# Swiftmailer
+
+> composer require symfony/swiftmailer-bundle
+
+> bin/console swiftmailer:spool:send --message-limit=10 --env=prod
+
