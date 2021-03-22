@@ -53,6 +53,10 @@
 
 > bin/console make:entity Subscription
 
+> bin/console make:form CategoryType
+
+> bin/console make:form VideoType
+
 
 # Symfony Packages
 
@@ -60,37 +64,19 @@
 
 > composer require symfony/maker-bundle --dev
 
-> composer require annotations
+> composer require annotations symfony/apache-pack twig-bundle
 
-> composer require symfony/apache-pack
+> composer require orm doctrine doctrine/annotations
 
-> composer require twig-bundle
+> composer require symfony/asset logger symfony/debug-bundle symfony/var-dumper
 
-> composer require orm
-
-> composer require doctrine
-
-> composer require doctrine/annotations
-
-> composer require symfony/asset
-
-> composer require logger
-
-> composer require symfony/flex
-
-> composer require maker
+> composer require symfony/flex maker
 
 > composer require orm-fixtures --dev
 
 > composer require web-profiler-bundle
 
-> composer require symfony/debug-bundle
-
-> composer require symfony/var-dumper
-
-> composer require symfony/profiler-pack
-
-> composer require symfony/cache
+> composer require symfony/profiler-pack symfony/cache
 
 > composer require symfony/proxy-manager-bridge
 
@@ -108,13 +94,11 @@
 
 > composer require symfony/orm-pack symfony/form symfony/security-bundle
 
-> composer require sensiolabs/security-checker
-
-> composer require symfony/expression-language
+> composer require sensiolabs/security-checker symfony/expression-language
 
 > sudo apt-get install php-xdebug
 
-> composer require symfony/translation
+> composer require symfony/translation symfony/filesystem
 
 > https://github.com/KnpLabs/KnpPaginatorBundle
 

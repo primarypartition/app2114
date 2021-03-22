@@ -1,8 +1,8 @@
 <?php
 /*
-|--------------------------------------------------------
-| copyright netprogs.pl | available only at Udemy.com | further distribution is prohibited  ***
-|--------------------------------------------------------
+|-----------------------------------------------------------
+| available only at Udemy.com | copyright netprogs.pl | further distribution is prohibited
+|-----------------------------------------------------------
 */
 namespace App\Entity;
 
@@ -10,15 +10,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index as Index;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VideoRepository")
  * @ORM\Table(name="videos", indexes={@Index(name="title_idx", columns={"title"})})
  */
 class Video
 {
-    public const videoForNotLoggedInOrNoMembers = 113716040;
+
+    public const videoForNotLoggedInOrNoMembers = 'https://player.vimeo.com/video/113716040';
     public const VimeoPath = 'https://player.vimeo.com/video/';
     public const perPage = 5; // for pagination
+    public const uploadFolder = '/uploads/videos/';
 
     /**
      * @ORM\Id()
@@ -64,6 +67,13 @@ class Video
      */
     private $usersThatDontLike;
 
+
+    /** 
+    * @Assert\NotBlank(message="Please, upload the video as a MP4 file.")
+    *  @Assert\File(mimeTypes={ "video/mp4" }) 
+    */
+    private $uploaded_video;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -100,10 +110,15 @@ class Video
         return $this;
     }
 
-
-    public function getVimeoId(): ?string
+    public function getVimeoId()
     {
-        return $this->path;
+        if( strpos($this->path, self::uploadFolder) !==false )
+        {
+            return $this->path;
+        }
+
+        $array = explode('/',$this->path);
+        return end($array);
     }
 
     public function getDuration(): ?int
@@ -209,6 +224,18 @@ class Video
         if ($this->usersThatDontLike->contains($usersThatDontLike)) {
             $this->usersThatDontLike->removeElement($usersThatDontLike);
         }
+
+        return $this;
+    }
+
+    public function getUploadedVideo()
+    {
+        return $this->uploaded_video;
+    }
+
+    public function setUploadedVideo($uploaded_video): self
+    {
+        $this->uploaded_video = $uploaded_video;
 
         return $this;
     }
