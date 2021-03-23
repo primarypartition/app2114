@@ -1,8 +1,8 @@
 <?php
 /*
-|--------------------------------------------------------
-| copyright netprogs.pl | available only at Udemy.com | further distribution is prohibited  ***
-|--------------------------------------------------------
+|-----------------------------------------------------------
+| available only at Udemy.com | copyright netprogs.pl | further distribution is prohibited
+|-----------------------------------------------------------
 */
 namespace App\Controller\Traits;
 
@@ -39,7 +39,7 @@ trait SaveSubscription {
             $subscription->setPaymentStatus('paid');
         }
         
-        $subscription->setPaymentStatus('paid'); // tmp
+        $subscription->setPaymentStatus('paid');
         
         $user->setSubscription($subscription);
 

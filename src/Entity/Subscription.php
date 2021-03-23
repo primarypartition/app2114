@@ -10,10 +10,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Subscription
 {
-   
+    public const ProPlan = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=L4TAVL5GJLNK6';
+    
+
+    public const EnterprisePlan = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BJGEYNG63G3F6';
+
+
     private static $planDataNames = ['free','pro','enterprise'];
 
-    
+
     private static $planDataPrices = [
 
         'free' => 0, // 0$
@@ -22,25 +27,25 @@ class Subscription
 
     ];
 
-   
+
     public static function getPlanDataNameByIndex(int $index): string
     {
         return self::$planDataNames[$index];
     }
 
-   
+
     public static function getPlanDataPriceByName(string $name): int
     {
         return self::$planDataPrices[$name];
     }
 
-    
+
     public static function getPlanDataNames(): array
     {
         return self::$planDataNames;
     }
 
-   
+
     public static function getPlanDataPrices(): array
     {
         return self::$planDataPrices;
@@ -126,3 +131,4 @@ class Subscription
         return $this;
     }
 }
+

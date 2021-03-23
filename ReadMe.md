@@ -312,7 +312,7 @@ Change the HerokuCache.php/FilesCache.php file from the Utils folder to look lik
     # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 ```
 
-## .gitignore to get database
+## .gitignore to get database over heroku
 
 ```
 /var/cache/
@@ -320,4 +320,43 @@ Change the HerokuCache.php/FilesCache.php file from the Utils folder to look lik
 /var/sessions/
 /var/spool/
 ```
+
+> git rm -r --cached .
+
+> git add .
+
+> git commit -m "change"
+
+## Installation and Deployment
+
+> heroku login
+
+> heroku create 
+
+> heroku config:set APP_ENV=heroku
+
+> heroku config:set APP_DEBUG=0
+
+> heroku config:set APP_SECRET=xxxxxxxxxxxxxx
+
+> heroku config:set DATABASE_URL=xxxxxxxxxxxxx
+
+> echo 'web: $(composer config bin-dir)/heroku-php-apache2 public/' > Procfile
+
+> git add .
+
+> git commit -m "change"
+
+> git push heroku master
+
+> heroku open
+
+
+# PayPal
+
+> https://github.com/paypal/ipn-code-samples
+
+> https://github.com/paypal/ipn-code-samples/tree/master/php
+
+> https://github.com/paypal/ipn-code-samples/blob/master/php/PaypalIPN.php
 
