@@ -12,7 +12,7 @@ use Doctrine\Common\Cache\SQLite3Cache;
 use Symfony\Component\Cache\Adapter\DoctrineAdapter;
 
 
-class FilesCache implements CacheInterface
+class HerokuCache implements CacheInterface
 {
 
     public $cache;
