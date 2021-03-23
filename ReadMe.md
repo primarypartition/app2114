@@ -57,6 +57,8 @@
 
 > bin/console make:form VideoType
 
+> bin/console make:subscriber
+
 
 # Symfony Packages
 
