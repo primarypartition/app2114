@@ -284,3 +284,40 @@ module.exports = Encore.getWebpackConfig();
 
 > bin/console swiftmailer:spool:send --message-limit=10 --env=prod
 
+
+# Heroku Deployment
+
+## composer.json file update
+
+```
+To the composer.json file add the following entry at the "require" section:
+
+"ext-sqlite3": "*", 
+"ext-intl" : "*",
+"ext-pdo_sqlite" : "*"
+
+then run 
+
+> composer update command.
+
+Inside the Utils folder create cache folder, and copy data.db file from the var directory (this can be empty database).
+
+Change the HerokuCache.php/FilesCache.php file from the Utils folder to look like the file from the downloadable resource from this lecture.
+```
+
+## .htaccess for https
+
+```
+    # RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+```
+
+## .gitignore to get database
+
+```
+/var/cache/
+/var/log/
+/var/sessions/
+/var/spool/
+```
+
